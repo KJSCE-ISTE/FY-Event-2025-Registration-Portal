@@ -18,16 +18,16 @@ function App() {
   }, []);
 
   return (
-    <div className="h-screen bg-black text-white overflow-hidden relative">
+    <div className="h-screen bg-black text-white overflow-hidden relative flex">
       {/* Background Grid Pattern - Tilted */}
       <div className="absolute inset-0 transform -rotate-3">
         <InteractiveGridPattern />
       </div>
       
-      {/* Registration Toggle Button - Top Left */}
+      {/* Registration Toggle Button - Mobile Only */}
       <button
         onClick={() => setIsFormOpen(!isFormOpen)}
-        className="fixed top-4 left-4 z-50 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+        className="fixed top-4 left-4 z-50 md:hidden bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-4 py-2 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
       >
         <svg 
           className={`w-5 h-5 transition-transform duration-300 ${isFormOpen ? 'rotate-180' : ''}`} 
@@ -40,8 +40,15 @@ function App() {
         {isFormOpen ? 'Close Form' : 'Register Now'}
       </button>
 
-      {/* Registration Form Overlay */}
-      <div className={`fixed inset-0 z-40 transition-all duration-500 ${
+      {/* Desktop Form Sidebar */}
+      <div className="hidden md:block w-2/5 h-full bg-black/90 backdrop-blur-md border-r border-white/20 relative z-40">
+        <div className="flex items-center justify-center p-8 h-full overflow-y-auto">
+          <EventRegistrationForm />
+        </div>
+      </div>
+
+      {/* Mobile Form Overlay */}
+      <div className={`md:hidden fixed inset-0 z-40 transition-all duration-500 ${
         isFormOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
       }`}>
         {/* Backdrop */}
@@ -51,17 +58,17 @@ function App() {
         />
         
         {/* Form Container */}
-        <div className={`absolute left-0 top-0 h-full w-full md:w-2/5 bg-black/90 backdrop-blur-md border-r border-white/20 transform transition-transform duration-500 ${
+        <div className={`absolute left-0 top-0 h-full w-full bg-black/90 backdrop-blur-md border-r border-white/20 transform transition-transform duration-500 ${
           isFormOpen ? 'translate-x-0' : '-translate-x-full'
         }`}>
-          <div className="flex items-center justify-center p-4 md:p-8 h-full overflow-y-auto">
+          <div className="flex items-center justify-center p-4 h-full overflow-y-auto">
             <EventRegistrationForm />
           </div>
         </div>
       </div>
       
       {/* Main Content */}
-      <div className="relative z-10 h-full flex items-center justify-center p-4 md:p-8">
+      <div className="relative z-10 h-full flex items-center justify-center p-4 md:p-8 w-full md:w-3/5 md:ml-auto">
         <div className="w-full h-full max-w-4xl">
           {/* Carousel Container */}
           <div 
