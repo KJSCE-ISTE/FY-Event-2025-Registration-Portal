@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { InteractiveGridPattern } from './components/InteractiveGridPattern';
+import EventRegistrationForm from './components/EventRegistrationForm';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-black text-white overflow-hidden relative">
+      {/* Background Grid Pattern - Tilted */}
+      <div className="absolute inset-0 transform -rotate-3">
+        <InteractiveGridPattern />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex">
+        {/* Left side - Form (40% width) */}
+        <div className="w-2/5 relative">
+          {/* Background for form area */}
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm border-r border-white/20"></div>
+          {/* Form content */}
+          <div className="relative z-10 flex items-center justify-center p-8 min-h-screen">
+            <EventRegistrationForm />
+          </div>
+        </div>
+        
+        {/* Right side - Empty for grid pattern background (60% width) */}
+        <div className="w-3/5"></div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
 
-export default App
+export default App;
