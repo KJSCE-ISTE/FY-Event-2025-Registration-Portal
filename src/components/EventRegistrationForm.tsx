@@ -63,6 +63,7 @@ const EventRegistrationForm: React.FC = () => {
   };
 
   return (
+    
     <div className="w-full max-w-lg mx-auto bg-black/80 backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-8 shadow-2xl">
       <div className="mb-6 md:mb-8 text-center">
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
