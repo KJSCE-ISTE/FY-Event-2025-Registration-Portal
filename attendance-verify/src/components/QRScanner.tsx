@@ -89,15 +89,29 @@ const QRScanner: React.FC<QRScannerProps> = ({ onLogout }) => {
   };
 
   const startScanner = () => {
-    const scanner = new Html5QrcodeScanner('qr-scanner', qrCodeConfig, false);
-    scannerRef.current = scanner;
-    scanner.render(handleScanSuccess, handleScanError);
     setIsScanning(true);
+    
+    // Use setTimeout to ensure the DOM element is rendered before initializing the scanner
+    setTimeout(() => {
+      const scannerElement = document.getElementById('qr-scanner');
+      if (scannerElement) {
+        const scanner = new Html5QrcodeScanner('qr-scanner', qrCodeConfig, false);
+        scannerRef.current = scanner;
+        scanner.render(handleScanSuccess, handleScanError);
+      } else {
+        console.error('QR scanner element not found');
+        setIsScanning(false);
+      }
+    }, 100);
   };
 
   const stopScanner = () => {
     if (scannerRef.current) {
-      scannerRef.current.clear();
+      try {
+        scannerRef.current.clear();
+      } catch (error) {
+        console.log('Scanner cleanup error:', error);
+      }
       scannerRef.current = null;
     }
     setIsScanning(false);
