@@ -137,79 +137,139 @@ function generateEmailHTML(firstName: string, lastName: string, userId: number):
             }
             
             body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-                line-height: 1.6;
-                color: #333;
-                background-color: #f8fafc;
-                padding: 40px 20px;
+                font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                line-height: 1.5;
+                color: #ffffff;
+                background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+                padding: 20px;
+                min-height: 100vh;
             }
             
             .container {
                 max-width: 600px;
                 margin: 0 auto;
-                background: #ffffff;
-                border-radius: 12px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                background: #000000;
+                border-radius: 24px;
                 overflow: hidden;
+                box-shadow: 
+                    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                    0 0 0 1px rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.08);
             }
             
             .header {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                padding: 40px;
+                background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+                padding: 60px 40px 50px;
                 text-align: center;
-                color: white;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .header::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, #10b981, #34d399, #6ee7b7, #34d399, #10b981);
+                background-size: 200% 100%;
+                animation: shimmer 3s ease-in-out infinite;
+            }
+            
+            @keyframes shimmer {
+                0%, 100% { background-position: 200% 0; }
+                50% { background-position: -200% 0; }
             }
             
             .logo {
-                font-size: 28px;
-                font-weight: 700;
-                margin-bottom: 8px;
-                letter-spacing: 2px;
+                font-size: 42px;
+                font-weight: 800;
+                margin-bottom: 12px;
+                letter-spacing: 4px;
+                background: linear-gradient(135deg, #ffffff, #e5e5e5);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
             }
             
             .title {
-                font-size: 20px;
-                font-weight: 400;
-                opacity: 0.95;
+                font-size: 18px;
+                font-weight: 500;
+                color: #10b981;
+                letter-spacing: 1px;
+                text-transform: uppercase;
             }
             
             .content {
-                padding: 40px;
+                padding: 50px 40px;
+                background: #000000;
             }
             
             .greeting {
-                font-size: 18px;
-                margin-bottom: 24px;
-                color: #1a202c;
+                font-size: 28px;
+                margin-bottom: 20px;
+                color: #ffffff;
+                font-weight: 700;
+            }
+            
+            .greeting-accent {
+                color: #10b981;
             }
             
             .message {
-                font-size: 16px;
-                color: #4a5568;
-                margin-bottom: 32px;
+                font-size: 18px;
+                color: #a3a3a3;
+                margin-bottom: 40px;
                 line-height: 1.7;
+                font-weight: 300;
             }
             
             .details-card {
-                background: #f7fafc;
-                border: 1px solid #e2e8f0;
-                border-radius: 8px;
-                padding: 24px;
-                margin: 32px 0;
+                background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 16px;
+                padding: 32px;
+                margin: 40px 0;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .details-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 1px;
+                background: linear-gradient(90deg, transparent, #10b981, transparent);
             }
             
             .details-title {
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 600;
-                color: #2d3748;
-                margin-bottom: 16px;
+                color: #ffffff;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .details-title::before {
+                content: '';
+                width: 4px;
+                height: 20px;
+                background: #10b981;
+                border-radius: 2px;
             }
             
             .detail-row {
                 display: flex;
                 justify-content: space-between;
-                padding: 8px 0;
-                border-bottom: 1px solid #e2e8f0;
+                align-items: center;
+                padding: 16px 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             }
             
             .detail-row:last-child {
@@ -217,74 +277,143 @@ function generateEmailHTML(firstName: string, lastName: string, userId: number):
             }
             
             .detail-label {
-                color: #718096;
+                color: #737373;
                 font-weight: 500;
+                font-size: 15px;
             }
             
             .detail-value {
-                color: #2d3748;
+                color: #ffffff;
                 font-weight: 600;
+                font-size: 16px;
+            }
+            
+            .status-confirmed {
+                color: #10b981;
+                background: rgba(16, 185, 129, 0.1);
+                padding: 6px 12px;
+                border-radius: 6px;
+                font-size: 14px;
+                font-weight: 600;
+                border: 1px solid rgba(16, 185, 129, 0.3);
             }
             
             .qr-section {
                 text-align: center;
-                padding: 32px;
-                background: #f7fafc;
-                border-radius: 8px;
-                margin: 32px 0;
+                padding: 50px 32px;
+                background: linear-gradient(135deg, #0f0f0f, #1f1f1f);
+                border-radius: 20px;
+                margin: 40px 0;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                position: relative;
+            }
+            
+            .qr-section::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                padding: 1px;
+                background: linear-gradient(135deg, #10b981, transparent, #10b981);
+                border-radius: 20px;
+                mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                mask-composite: xor;
+                -webkit-mask-composite: xor;
             }
             
             .qr-title {
-                font-size: 18px;
-                font-weight: 600;
-                color: #2d3748;
-                margin-bottom: 12px;
+                font-size: 24px;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 8px;
             }
             
             .qr-description {
-                font-size: 14px;
-                color: #718096;
-                margin-bottom: 24px;
+                font-size: 16px;
+                color: #a3a3a3;
+                margin-bottom: 32px;
+                font-weight: 300;
             }
             
             .qr-code {
-                background: white;
-                padding: 20px;
-                border-radius: 8px;
+                background: #ffffff;
+                padding: 24px;
+                border-radius: 16px;
                 display: inline-block;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                margin-bottom: 16px;
+                box-shadow: 
+                    0 20px 25px -5px rgba(0, 0, 0, 0.3),
+                    0 0 0 1px rgba(16, 185, 129, 0.1);
+                margin-bottom: 24px;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .qr-code::before {
+                content: '';
+                position: absolute;
+                top: -2px;
+                left: -2px;
+                right: -2px;
+                bottom: -2px;
+                background: linear-gradient(45deg, #10b981, #34d399, #10b981);
+                border-radius: 18px;
+                z-index: -1;
             }
             
             .qr-code img {
                 width: 200px;
                 height: 200px;
                 display: block;
+                border-radius: 8px;
             }
             
             .registration-id {
-                background: #667eea;
-                color: white;
-                padding: 8px 16px;
-                border-radius: 20px;
-                font-weight: 600;
-                font-size: 14px;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: #ffffff;
+                padding: 12px 24px;
+                border-radius: 25px;
+                font-weight: 700;
+                font-size: 16px;
                 display: inline-block;
+                letter-spacing: 1px;
+                box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.3);
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }
             
             .instructions {
-                background: #edf2f7;
-                border-left: 4px solid #667eea;
-                padding: 20px;
-                margin: 32px 0;
-                border-radius: 0 4px 4px 0;
+                background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-left: 4px solid #10b981;
+                padding: 32px;
+                margin: 40px 0;
+                border-radius: 12px;
+                position: relative;
+            }
+            
+            .instructions::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 4px;
+                height: 100%;
+                background: linear-gradient(to bottom, #10b981, #34d399, #10b981);
             }
             
             .instructions h3 {
-                font-size: 16px;
+                font-size: 20px;
                 font-weight: 600;
-                color: #2d3748;
-                margin-bottom: 12px;
+                color: #ffffff;
+                margin-bottom: 20px;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+            
+            .instructions h3::before {
+                content: '✓';
+                color: #10b981;
+                font-size: 18px;
+                font-weight: bold;
             }
             
             .instructions ul {
@@ -293,52 +422,93 @@ function generateEmailHTML(firstName: string, lastName: string, userId: number):
             }
             
             .instructions li {
-                padding: 4px 0;
-                color: #4a5568;
+                padding: 12px 0;
+                color: #d4d4d4;
                 position: relative;
-                padding-left: 20px;
+                padding-left: 32px;
+                font-size: 16px;
+                font-weight: 300;
+                transition: color 0.2s ease;
             }
             
             .instructions li::before {
-                content: "•";
-                color: #667eea;
+                content: '';
                 position: absolute;
                 left: 0;
-                font-weight: bold;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 6px;
+                height: 6px;
+                background: #10b981;
+                border-radius: 50%;
+                box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            }
+            
+            .instructions li:hover {
+                color: #ffffff;
             }
             
             .footer {
-                background: #f7fafc;
-                padding: 32px;
+                background: #000000;
+                padding: 40px;
                 text-align: center;
-                border-top: 1px solid #e2e8f0;
+                border-top: 1px solid rgba(255, 255, 255, 0.06);
+            }
+            
+            .footer-content {
+                border-top: 1px solid rgba(16, 185, 129, 0.2);
+                padding-top: 24px;
             }
             
             .footer p {
-                color: #718096;
+                color: #737373;
                 font-size: 14px;
                 margin-bottom: 8px;
+                font-weight: 300;
             }
             
             .footer p:last-child {
                 margin-bottom: 0;
+                font-weight: 500;
+                color: #10b981;
             }
             
             @media (max-width: 600px) {
                 body {
-                    padding: 20px 10px;
+                    padding: 10px;
                 }
                 
                 .header {
-                    padding: 32px 24px;
+                    padding: 40px 24px 32px;
+                }
+                
+                .logo {
+                    font-size: 36px;
+                    letter-spacing: 2px;
+                }
+                
+                .title {
+                    font-size: 16px;
                 }
                 
                 .content, .footer {
                     padding: 32px 24px;
                 }
                 
-                .qr-section {
+                .greeting {
+                    font-size: 24px;
+                }
+                
+                .message {
+                    font-size: 16px;
+                }
+                
+                .details-card, .instructions {
                     padding: 24px;
+                }
+                
+                .qr-section {
+                    padding: 32px 24px;
                 }
                 
                 .qr-code img {
@@ -348,7 +518,12 @@ function generateEmailHTML(firstName: string, lastName: string, userId: number):
                 
                 .detail-row {
                     flex-direction: column;
-                    gap: 4px;
+                    align-items: flex-start;
+                    gap: 8px;
+                }
+                
+                .detail-value {
+                    align-self: flex-end;
                 }
             }
         </style>
@@ -361,54 +536,56 @@ function generateEmailHTML(firstName: string, lastName: string, userId: number):
             </div>
             
             <div class="content">
-                <div class="greeting">Hello ${firstName},</div>
+                <div class="greeting">Hello <span class="greeting-accent">${firstName}</span>,</div>
                 
                 <div class="message">
                     Thank you for registering for our event! Your registration has been confirmed 
-                    and we're excited to have you join us.
+                    and we're excited to have you join us for this incredible experience.
                 </div>
                 
                 <div class="details-card">
                     <div class="details-title">Registration Details</div>
                     <div class="detail-row">
-                        <span class="detail-label">Name</span>
+                        <span class="detail-label">Full Name</span>
                         <span class="detail-value">${firstName} ${lastName}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Registration ID</span>
-                        <span class="detail-value">#${userId}</span>
+                        <span class="detail-value">#${userId.toString().padStart(4, '0')}</span>
                     </div>
                     <div class="detail-row">
                         <span class="detail-label">Status</span>
-                        <span class="detail-value" style="color: #48bb78;">Confirmed</span>
+                        <span class="detail-value status-confirmed">Confirmed</span>
                     </div>
                 </div>
                 
                 <div class="qr-section">
-                    <div class="qr-title">Your Event Pass</div>
+                    <div class="qr-title">Your Digital Pass</div>
                     <div class="qr-description">
-                        Present this QR code at the event entrance for check-in
+                        Present this QR code at the event entrance for instant check-in
                     </div>
                     <div class="qr-code">
                         <img src="cid:qrcode" alt="QR Code for Registration #${userId}"/>
                     </div>
-                    <div class="registration-id">ID: #${userId}</div>
+                    <div class="registration-id">ID: #${userId.toString().padStart(4, '0')}</div>
                 </div>
                 
                 <div class="instructions">
-                    <h3>What to do next:</h3>
+                    <h3>What's Next?</h3>
                     <ul>
-                        <li>Save this email or screenshot your QR code</li>
-                        <li>Arrive 15 minutes early for check-in</li>
-                        <li>Bring a valid ID along with your pass</li>
-                        <li>If the QR code doesn't work, show your Registration ID</li>
+                        <li>Save this email or screenshot your QR code for quick access</li>
+                        <li>Arrive 15 minutes early to ensure smooth check-in process</li>
+                        <li>Bring a valid government-issued ID along with your digital pass</li>
+                        <li>If QR code scanning fails, simply show your Registration ID to staff</li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer">
-                <p>This is an automated confirmation email.</p>
-                <p>© 2025 ISTE Event Management System</p>
+                <div class="footer-content">
+                    <p>This is an automated confirmation email from our secure system.</p>
+                    <p>© 2025 ISTE Event Management System</p>
+                </div>
             </div>
         </div>
     </body>
