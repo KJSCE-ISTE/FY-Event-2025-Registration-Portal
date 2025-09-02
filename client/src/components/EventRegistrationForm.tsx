@@ -91,7 +91,7 @@ const EventRegistrationForm: React.FC = () => {
         localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
         
         setIsAlreadyRegistered(true);
-        setSuccessMessage(`Thank you ${formData.firstName} ${formData.lastName}! Your registration was successful. Check your email for confirmation details. 🎉`);
+        setSuccessMessage(`Thank you ${formData.firstName} ${formData.lastName}! Your registration was successful. Check your email for confirmation details.`);
         
         // Reset form
         setFormData({
@@ -132,7 +132,7 @@ const EventRegistrationForm: React.FC = () => {
       {isAlreadyRegistered ? (
         <div className="text-center space-y-6">
           <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-6">
-            <div className="text-4xl mb-4">🎉</div>
+            {/* <div className="text-4xl mb-4">🎉</div> */}
             <p className="text-white text-lg font-medium mb-2">
               {successMessage}
             </p>
