@@ -693,12 +693,6 @@ app.post('/api/login', async (req, res) => {
     let email: string;
     let name: string;
 
-    // For development/testing - remove this in production
-    if (credential === 'mock-jwt-token-for-testing') {
-      // Mock authentication for testing
-      email = 'anamay.n@somaiya.edu'; // Default to first team member
-      name = 'Anamay Narkar';
-    } else {
       // Verify Google token
       const ticket = await client.verifyIdToken({
         idToken: credential,
@@ -712,7 +706,6 @@ app.post('/api/login', async (req, res) => {
 
       email = payload.email!;
       name = payload.name!;
-    }
 
     // Check if user is in ISTE team
     const teamResult = await pool.query(
