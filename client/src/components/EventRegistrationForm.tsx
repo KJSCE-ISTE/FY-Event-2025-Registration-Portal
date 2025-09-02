@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '../lib/utils';
 
 interface FormData {
@@ -22,6 +22,18 @@ const EventRegistrationForm: React.FC = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Partial<FormData>>({});
+  const [isAlreadyRegistered, setIsAlreadyRegistered] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  // Check if user is already registered
+  useEffect(() => {
+    const registrationData = localStorage.getItem('eventRegistration');
+    if (registrationData) {
+      setIsAlreadyRegistered(true);
+      const { firstName, lastName } = JSON.parse(registrationData);
+      setSuccessMessage(`Welcome back ${firstName} ${lastName}! You're already registered for this event. 🎉`);
+    }
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -53,17 +65,60 @@ const EventRegistrationForm: React.FC = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    console.log('Form submitted:', formData);
-    alert('Registration successful! 🎉');
-    
-    setIsSubmitting(false);
+    try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      
+      const response = await fetch(`${backendUrl}/api/register`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save registration data to localStorage
+        const registrationData = {
+          userId: data.userId,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          registeredAt: new Date().toISOString()
+        };
+        
+        localStorage.setItem('eventRegistration', JSON.stringify(registrationData));
+        
+        setIsAlreadyRegistered(true);
+        setSuccessMessage(`Thank you ${formData.firstName} ${formData.lastName}! Your registration was successful. Check your email for confirmation details. 🎉`);
+        
+        // Reset form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          year: '',
+          branch: ''
+        });
+      } else {
+        // Handle specific error cases
+        if (data.error === 'Email already registered') {
+          setErrors({ email: 'This email is already registered for the event' });
+        } else {
+          alert(`Registration failed: ${data.error || 'Unknown error'}`);
+        }
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert('Registration failed: Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    
     <div className="w-full max-w-lg mx-auto bg-black/80 backdrop-blur-xl border border-white/20 rounded-2xl p-4 md:p-8 shadow-2xl">
       <div className="mb-6 md:mb-8 text-center">
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
@@ -73,6 +128,31 @@ const EventRegistrationForm: React.FC = () => {
           Join us for an exclusive speaker session
         </p>
       </div>
+
+      {isAlreadyRegistered ? (
+        <div className="text-center space-y-6">
+          <div className="bg-green-500/20 border border-green-500/50 rounded-lg p-6">
+            <div className="text-4xl mb-4">🎉</div>
+            <p className="text-white text-lg font-medium mb-2">
+              {successMessage}
+            </p>
+            <p className="text-white/70 text-sm">
+              You can close this page or register someone else by clearing your registration.
+            </p>
+          </div>
+          
+          <button
+            onClick={() => {
+              localStorage.removeItem('eventRegistration');
+              setIsAlreadyRegistered(false);
+              setSuccessMessage('');
+            }}
+            className="w-full py-3 px-6 rounded-lg font-semibold text-sm transition-all duration-300 bg-white/10 text-white border border-white/30 hover:bg-white/20"
+          >
+            Register Someone Else
+          </button>
+        </div>
+      ) : (
 
       <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
         {/* Name Fields */}
@@ -250,6 +330,7 @@ const EventRegistrationForm: React.FC = () => {
           )}
         </button>
       </form>
+      )}
     </div>
   );
 };
