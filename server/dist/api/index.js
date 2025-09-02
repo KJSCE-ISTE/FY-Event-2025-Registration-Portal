@@ -91,8 +91,6 @@ async function initializeDatabase() {
         console.error('Database initialization error:', error);
     }
 }
-// Generate HTML email template
-// Generate HTML email template with dark theme
 function generateEmailHTML(firstName, lastName, userId) {
     return `
     <!DOCTYPE html>
@@ -102,8 +100,6 @@ function generateEmailHTML(firstName, lastName, userId) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Event Registration Confirmation</title>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-            
             * {
                 margin: 0;
                 padding: 0;
@@ -111,451 +107,278 @@ function generateEmailHTML(firstName, lastName, userId) {
             }
             
             body {
-                font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                line-height: 1.7;
-                color: #e2e8f0;
-                background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 100%);
-                min-height: 100vh;
-                padding: 20px;
-                font-weight: 400;
-            }
-            
-            .email-wrapper {
-                max-width: 650px;
-                margin: 0 auto;
-                background: rgba(15, 15, 35, 0.95);
-                backdrop-filter: blur(20px);
-                border-radius: 24px;
-                overflow: hidden;
-                box-shadow: 
-                    0 32px 64px rgba(0, 0, 0, 0.4),
-                    0 8px 32px rgba(139, 92, 246, 0.1),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-            }
-            
-            .header {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
-                padding: 60px 40px;
-                text-align: center;
-                position: relative;
-                overflow: hidden;
-            }
-            
-            .header::before {
-                content: '';
-                position: absolute;
-                top: -50%;
-                left: -50%;
-                width: 200%;
-                height: 200%;
-                background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-                animation: shimmer 3s ease-in-out infinite;
-            }
-            
-            @keyframes shimmer {
-                0%, 100% { transform: rotate(0deg); }
-                50% { transform: rotate(180deg); }
-            }
-            
-            .logo {
-                font-size: 3.5rem;
-                font-weight: 800;
-                color: #ffffff;
-                margin-bottom: 16px;
-                text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-                letter-spacing: 0.1em;
-                position: relative;
-                z-index: 2;
-            }
-            
-            .title {
-                color: #ffffff;
-                font-size: 2.2rem;
-                font-weight: 700;
-                margin-bottom: 12px;
-                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-                position: relative;
-                z-index: 2;
-            }
-            
-            .subtitle {
-                color: rgba(255, 255, 255, 0.9);
-                font-size: 1.3rem;
-                font-weight: 400;
-                position: relative;
-                z-index: 2;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background-color: #f8fafc;
+                padding: 40px 20px;
             }
             
             .container {
-                padding: 50px 40px;
-            }
-            
-            .greeting {
-                font-size: 1.2rem;
-                color: #f1f5f9;
-                margin-bottom: 24px;
-                font-weight: 500;
-            }
-            
-            .intro-text {
-                font-size: 1.1rem;
-                color: #cbd5e1;
-                margin-bottom: 40px;
-                line-height: 1.8;
-            }
-            
-            .user-info {
-                background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.15) 100%);
-                border: 1px solid rgba(99, 102, 241, 0.2);
-                padding: 32px;
-                border-radius: 16px;
-                margin: 32px 0;
-                position: relative;
+                max-width: 600px;
+                margin: 0 auto;
+                background: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
                 overflow: hidden;
             }
             
-            .user-info::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
-                border-radius: 16px 16px 0 0;
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 40px;
+                text-align: center;
+                color: white;
             }
             
-            .user-info h3 {
-                color: #f8fafc;
-                font-size: 1.4rem;
+            .logo {
+                font-size: 28px;
+                font-weight: 700;
+                margin-bottom: 8px;
+                letter-spacing: 2px;
+            }
+            
+            .title {
+                font-size: 20px;
+                font-weight: 400;
+                opacity: 0.95;
+            }
+            
+            .content {
+                padding: 40px;
+            }
+            
+            .greeting {
+                font-size: 18px;
+                margin-bottom: 24px;
+                color: #1a202c;
+            }
+            
+            .message {
+                font-size: 16px;
+                color: #4a5568;
+                margin-bottom: 32px;
+                line-height: 1.7;
+            }
+            
+            .details-card {
+                background: #f7fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 24px;
+                margin: 32px 0;
+            }
+            
+            .details-title {
+                font-size: 16px;
                 font-weight: 600;
-                margin-bottom: 20px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
+                color: #2d3748;
+                margin-bottom: 16px;
             }
             
-            .info-item {
+            .detail-row {
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
-                margin-bottom: 16px;
-                padding: 12px 0;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 8px 0;
+                border-bottom: 1px solid #e2e8f0;
             }
             
-            .info-item:last-child {
+            .detail-row:last-child {
                 border-bottom: none;
-                margin-bottom: 0;
             }
             
-            .info-label {
-                color: #94a3b8;
+            .detail-label {
+                color: #718096;
                 font-weight: 500;
             }
             
-            .info-value {
-                color: #f1f5f9;
+            .detail-value {
+                color: #2d3748;
                 font-weight: 600;
             }
             
             .qr-section {
-                background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.8) 100%);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 48px 40px;
-                border-radius: 20px;
-                margin: 40px 0;
                 text-align: center;
-                position: relative;
-                backdrop-filter: blur(10px);
-            }
-            
-            .qr-section::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));
-                border-radius: 20px;
-                z-index: -1;
+                padding: 32px;
+                background: #f7fafc;
+                border-radius: 8px;
+                margin: 32px 0;
             }
             
             .qr-title {
-                color: #f8fafc;
-                font-size: 1.6rem;
-                font-weight: 700;
-                margin-bottom: 16px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
+                font-size: 18px;
+                font-weight: 600;
+                color: #2d3748;
+                margin-bottom: 12px;
             }
             
             .qr-description {
-                color: #cbd5e1;
-                font-size: 1.1rem;
-                margin-bottom: 32px;
-                line-height: 1.6;
+                font-size: 14px;
+                color: #718096;
+                margin-bottom: 24px;
             }
             
             .qr-code {
-                margin: 32px 0;
-                padding: 24px;
-                background: #ffffff;
-                border-radius: 16px;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
                 display: inline-block;
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                margin-bottom: 16px;
             }
             
             .qr-code img {
-                width: 240px;
-                height: 240px;
-                border-radius: 12px;
+                width: 200px;
+                height: 200px;
                 display: block;
             }
             
             .registration-id {
-                background: linear-gradient(135deg, #f59e0b, #f97316);
-                color: #ffffff;
-                padding: 12px 24px;
-                border-radius: 50px;
-                font-weight: 700;
-                font-size: 1.1rem;
-                display: inline-block;
-                margin: 16px 0;
-                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-                box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-            }
-            
-            .backup-info {
-                background: rgba(239, 68, 68, 0.1);
-                border: 1px solid rgba(239, 68, 68, 0.2);
-                border-radius: 12px;
-                padding: 20px;
-                margin-top: 24px;
-                color: #fecaca;
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-            
-            .next-steps {
-                background: rgba(34, 197, 94, 0.1);
-                border: 1px solid rgba(34, 197, 94, 0.2);
-                border-radius: 16px;
-                padding: 32px;
-                margin: 40px 0;
-            }
-            
-            .next-steps h3 {
-                color: #86efac;
-                font-size: 1.4rem;
+                background: #667eea;
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
                 font-weight: 600;
-                margin-bottom: 20px;
-                display: flex;
-                align-items: center;
-                gap: 8px;
+                font-size: 14px;
+                display: inline-block;
             }
             
-            .steps-list {
+            .instructions {
+                background: #edf2f7;
+                border-left: 4px solid #667eea;
+                padding: 20px;
+                margin: 32px 0;
+                border-radius: 0 4px 4px 0;
+            }
+            
+            .instructions h3 {
+                font-size: 16px;
+                font-weight: 600;
+                color: #2d3748;
+                margin-bottom: 12px;
+            }
+            
+            .instructions ul {
                 list-style: none;
                 padding: 0;
             }
             
-            .steps-list li {
-                display: flex;
-                align-items: flex-start;
-                gap: 12px;
-                margin-bottom: 16px;
-                color: #d1fae5;
-                font-size: 1.05rem;
-                line-height: 1.6;
+            .instructions li {
+                padding: 4px 0;
+                color: #4a5568;
+                position: relative;
+                padding-left: 20px;
             }
             
-            .step-icon {
-                background: linear-gradient(135deg, #10b981, #059669);
-                color: #ffffff;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.8rem;
-                font-weight: 600;
-                flex-shrink: 0;
-                margin-top: 2px;
-            }
-            
-            .contact-section {
-                text-align: center;
-                margin: 40px 0;
-                padding: 32px;
-                background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-                border: 1px solid rgba(59, 130, 246, 0.2);
-                border-radius: 16px;
-            }
-            
-            .contact-section p {
-                color: #cbd5e1;
-                font-size: 1.1rem;
-                line-height: 1.7;
+            .instructions li::before {
+                content: "•";
+                color: #667eea;
+                position: absolute;
+                left: 0;
+                font-weight: bold;
             }
             
             .footer {
-                background: rgba(15, 23, 42, 0.6);
+                background: #f7fafc;
+                padding: 32px;
                 text-align: center;
-                padding: 32px 40px;
-                color: #64748b;
-                font-size: 0.9rem;
-                line-height: 1.6;
+                border-top: 1px solid #e2e8f0;
             }
             
-            .footer-divider {
-                height: 1px;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-                margin: 20px 0;
+            .footer p {
+                color: #718096;
+                font-size: 14px;
+                margin-bottom: 8px;
             }
             
-            .highlight {
-                background: linear-gradient(135deg, #ef4444, #dc2626);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                font-weight: 700;
-            }
-            
-            .glow {
-                text-shadow: 0 0 20px currentColor;
+            .footer p:last-child {
+                margin-bottom: 0;
             }
             
             @media (max-width: 600px) {
                 body {
-                    padding: 10px;
-                }
-                
-                .email-wrapper {
-                    border-radius: 16px;
+                    padding: 20px 10px;
                 }
                 
                 .header {
-                    padding: 40px 24px;
-                }
-                
-                .container, .footer {
                     padding: 32px 24px;
                 }
                 
-                .logo {
-                    font-size: 2.8rem;
-                }
-                
-                .title {
-                    font-size: 1.8rem;
+                .content, .footer {
+                    padding: 32px 24px;
                 }
                 
                 .qr-section {
-                    padding: 32px 24px;
+                    padding: 24px;
                 }
                 
                 .qr-code img {
-                    width: 200px;
-                    height: 200px;
+                    width: 160px;
+                    height: 160px;
+                }
+                
+                .detail-row {
+                    flex-direction: column;
+                    gap: 4px;
                 }
             }
         </style>
     </head>
     <body>
-        <div class="email-wrapper">
+        <div class="container">
             <div class="header">
                 <div class="logo">ISTE</div>
-                <h1 class="title">Registration Confirmed! 🎉</h1>
-                <p class="subtitle">Welcome to our exclusive event, ${firstName}!</p>
+                <div class="title">Registration Confirmed</div>
             </div>
             
-            <div class="container">
-                <p class="greeting">Dear <strong>${firstName} ${lastName}</strong>,</p>
-                <p class="intro-text">
-                    🚀 Thank you for registering for our event! We're absolutely thrilled to have you join us 
-                    for what promises to be an incredible experience. Get ready for cutting-edge insights, 
-                    networking opportunities, and unforgettable moments.
-                </p>
+            <div class="content">
+                <div class="greeting">Hello ${firstName},</div>
                 
-                <div class="user-info">
-                    <h3>✨ Your Registration Details</h3>
-                    <div class="info-item">
-                        <span class="info-label">Full Name</span>
-                        <span class="info-value">${firstName} ${lastName}</span>
+                <div class="message">
+                    Thank you for registering for our event! Your registration has been confirmed 
+                    and we're excited to have you join us.
+                </div>
+                
+                <div class="details-card">
+                    <div class="details-title">Registration Details</div>
+                    <div class="detail-row">
+                        <span class="detail-label">Name</span>
+                        <span class="detail-value">${firstName} ${lastName}</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Registration ID</span>
-                        <span class="info-value highlight">#${userId}</span>
+                    <div class="detail-row">
+                        <span class="detail-label">Registration ID</span>
+                        <span class="detail-value">#${userId}</span>
                     </div>
-                    <div class="info-item">
-                        <span class="info-label">Status</span>
-                        <span class="info-value" style="color: #10b981;">✅ Confirmed</span>
+                    <div class="detail-row">
+                        <span class="detail-label">Status</span>
+                        <span class="detail-value" style="color: #48bb78;">Confirmed</span>
                     </div>
                 </div>
                 
                 <div class="qr-section">
-                    <h2 class="qr-title">🎫 Your Digital Event Pass</h2>
-                    <p class="qr-description">
-                        Present this QR code at the event entrance for instant check-in. 
-                        Save it to your phone or take a screenshot for easy access.
-                    </p>
+                    <div class="qr-title">Your Event Pass</div>
+                    <div class="qr-description">
+                        Present this QR code at the event entrance for check-in
+                    </div>
                     <div class="qr-code">
                         <img src="cid:qrcode" alt="QR Code for Registration #${userId}"/>
                     </div>
-                    <div class="registration-id">
-                        Registration ID: #${userId}
-                    </div>
-                    <div class="backup-info">
-                        <strong>⚠️ Backup Option:</strong> If the QR code doesn't scan, simply show your 
-                        Registration ID <strong>#${userId}</strong> to our team at the entrance.
-                    </div>
+                    <div class="registration-id">ID: #${userId}</div>
                 </div>
                 
-                <div class="next-steps">
-                    <h3>📋 What Happens Next?</h3>
-                    <ul class="steps-list">
-                        <li>
-                            <span class="step-icon">1</span>
-                            <span>Save this email to your favorites or print it out</span>
-                        </li>
-                        <li>
-                            <span class="step-icon">2</span>
-                            <span>Screenshot or download your QR code for mobile access</span>
-                        </li>
-                        <li>
-                            <span class="step-icon">3</span>
-                            <span>Arrive 15-20 minutes early for smooth check-in</span>
-                        </li>
-                        <li>
-                            <span class="step-icon">4</span>
-                            <span>Bring a valid ID along with your digital pass</span>
-                        </li>
-                        <li>
-                            <span class="step-icon">5</span>
-                            <span>Get ready for an amazing experience! 🎉</span>
-                        </li>
+                <div class="instructions">
+                    <h3>What to do next:</h3>
+                    <ul>
+                        <li>Save this email or screenshot your QR code</li>
+                        <li>Arrive 15 minutes early for check-in</li>
+                        <li>Bring a valid ID along with your pass</li>
+                        <li>If the QR code doesn't work, show your Registration ID</li>
                     </ul>
-                </div>
-                
-                <div class="contact-section">
-                    <p>
-                        <strong>Need Help?</strong><br>
-                        Have questions or concerns? Our event team is here to help! 
-                        Reach out to us anytime before the event.
-                    </p>
                 </div>
             </div>
             
             <div class="footer">
-                <div class="footer-divider"></div>
-                <p><strong>This is an automated confirmation email.</strong></p>
-                <p>Please do not reply to this message.</p>
-                <div class="footer-divider"></div>
+                <p>This is an automated confirmation email.</p>
                 <p>© 2025 ISTE Event Management System</p>
-                <p>Powered by cutting-edge technology ⚡</p>
             </div>
         </div>
     </body>
@@ -642,25 +465,17 @@ app.post('/api/login', async (req, res) => {
         }
         let email;
         let name;
-        // For development/testing - remove this in production
-        if (credential === 'mock-jwt-token-for-testing') {
-            // Mock authentication for testing
-            email = 'anamay.n@somaiya.edu'; // Default to first team member
-            name = 'Anamay Narkar';
+        // Verify Google token
+        const ticket = await client.verifyIdToken({
+            idToken: credential,
+            audience: GOOGLE_CLIENT_ID,
+        });
+        const payload = ticket.getPayload();
+        if (!payload) {
+            return res.status(400).json({ error: 'Invalid Google token' });
         }
-        else {
-            // Verify Google token
-            const ticket = await client.verifyIdToken({
-                idToken: credential,
-                audience: GOOGLE_CLIENT_ID,
-            });
-            const payload = ticket.getPayload();
-            if (!payload) {
-                return res.status(400).json({ error: 'Invalid Google token' });
-            }
-            email = payload.email;
-            name = payload.name;
-        }
+        email = payload.email;
+        name = payload.name;
         // Check if user is in ISTE team
         const teamResult = await pool.query('SELECT * FROM iste_team WHERE email = $1', [email]);
         if (teamResult.rows.length === 0) {
@@ -728,20 +543,37 @@ app.post('/api/scan-qr', authenticateToken, async (req, res) => {
         if (!parsedData.id || isNaN(parsedData.id)) {
             return res.status(400).json({ error: 'Invalid QR code format' });
         }
-        const result = await pool.query('UPDATE registrations SET attended = TRUE WHERE id = $1 RETURNING *', [parsedData.id]);
-        if (result.rows.length === 0) {
+        // First check if user exists and if attendance is already marked
+        const checkResult = await pool.query('SELECT * FROM registrations WHERE id = $1', [parsedData.id]);
+        if (checkResult.rows.length === 0) {
             return res.status(404).json({ error: 'Registration not found' });
         }
-        const user = result.rows[0];
+        const user = checkResult.rows[0];
+        if (user.attended) {
+            return res.status(400).json({
+                error: 'Attendance already marked for this user',
+                user: {
+                    id: user.id,
+                    name: `${user.first_name} ${user.last_name}`,
+                    email: user.email,
+                    year: user.year,
+                    branch: user.branch,
+                    attended: user.attended
+                }
+            });
+        }
+        // Mark attendance
+        const result = await pool.query('UPDATE registrations SET attended = TRUE WHERE id = $1 RETURNING *', [parsedData.id]);
+        const updatedUser = result.rows[0];
         res.status(200).json({
             message: 'Attendance marked successfully',
             user: {
-                id: user.id,
-                name: `${user.first_name} ${user.last_name}`,
-                email: user.email,
-                year: user.year,
-                branch: user.branch,
-                attended: user.attended
+                id: updatedUser.id,
+                name: `${updatedUser.first_name} ${updatedUser.last_name}`,
+                email: updatedUser.email,
+                year: updatedUser.year,
+                branch: updatedUser.branch,
+                attended: updatedUser.attended
             }
         });
     }
