@@ -25,6 +25,18 @@ export interface AttendanceResponse {
   };
 }
 
+export interface ScanQRResponse {
+  message: string;
+  user: {
+    id: number;
+    name: string;
+    email: string;
+    year: string;
+    branch: string;
+    attended: boolean;
+  };
+}
+
 export interface GoogleCredentialResponse {
   credential: string;
   select_by: string;

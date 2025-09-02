@@ -218,7 +218,7 @@ const EventRegistrationForm: React.FC = () => {
                 "text-white placeholder-white/50",
                 errors.email ? "border-red-500" : "border-white/30"
               )}
-              placeholder="your.email@example.com"
+              placeholder="your.email@somaiya.edu"
             />
             {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
           </div>

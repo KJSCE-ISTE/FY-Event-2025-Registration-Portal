@@ -49,24 +49,47 @@ const QRScanner: React.FC<QRScannerProps> = ({ onLogout }) => {
     setScanResult(null);
 
     try {
-      // The QR code should contain the user ID
-      const userId = decodedText.trim();
+      // Log the raw QR data for debugging
+      console.log('Raw QR Code Data:', decodedText);
       
-      if (!userId || isNaN(Number(userId))) {
+      const trimmedText = decodedText.trim();
+      
+      // Try to parse as JSON first (new format), fallback to plain ID
+      let parsedData;
+      try {
+        parsedData = JSON.parse(trimmedText);
+        console.log('Parsed QR Data:', parsedData);
+      } catch {
+        // If parsing fails, treat as plain user ID
+        const userId = parseInt(trimmedText);
+        if (isNaN(userId)) {
+          setScanResult({
+            type: 'error',
+            message: `Invalid QR code format. Scanned: "${trimmedText.substring(0, 100)}${trimmedText.length > 100 ? '...' : ''}"`
+          });
+          setProcessing(false);
+          return;
+        }
+        parsedData = { id: userId };
+        console.log('Plain ID detected:', userId);
+      }
+
+      // Validate that we have an ID
+      if (!parsedData.id || isNaN(Number(parsedData.id))) {
         setScanResult({
           type: 'error',
-          message: 'Invalid QR code format. Please scan a valid event QR code.'
+          message: `Invalid QR code format. Scanned: "${trimmedText.substring(0, 100)}${trimmedText.length > 100 ? '...' : ''}"`
         });
         setProcessing(false);
         return;
       }
 
-      // Call the attendance API
-      const response = await attendanceAPI.updateAttendance(userId);
+      // Call the scan QR API (which handles both formats)
+      const response = await attendanceAPI.scanQR(trimmedText);
       
       setScanResult({
         type: 'success',
-        message: `Attendance marked successfully for ${response.user.first_name} ${response.user.last_name}`,
+        message: `Attendance marked successfully for ${response.user.name}`,
         user: response.user
       });
 
@@ -76,13 +99,22 @@ const QRScanner: React.FC<QRScannerProps> = ({ onLogout }) => {
       if (error.response?.status === 404) {
         setScanResult({
           type: 'error',
-          message: 'User not found. Please check the QR code.'
+          message: 'Registration not found. Please check the QR code.'
         });
       } else if (error.response?.status === 400) {
-        setScanResult({
-          type: 'warning',
-          message: 'Attendance already marked for this user.'
-        });
+        const errorMsg = error.response?.data?.error || 'Bad request';
+        if (errorMsg.includes('already marked') || errorMsg.includes('attended')) {
+          setScanResult({
+            type: 'warning',
+            message: 'Attendance already marked for this user.',
+            user: error.response?.data?.user // Include user data if available
+          });
+        } else {
+          setScanResult({
+            type: 'error',
+            message: errorMsg
+          });
+        }
       } else {
         setScanResult({
           type: 'error',
@@ -256,8 +288,8 @@ const QRScanner: React.FC<QRScannerProps> = ({ onLogout }) => {
                     {scanResult.user && (
                       <div className="mt-2 text-xs sm:text-sm text-gray-300 space-y-1">
                         <p className="break-all">📧 {scanResult.user.email}</p>
-                        <p>📞 {scanResult.user.phone}</p>
                         <p>🎓 {scanResult.user.year} - {scanResult.user.branch}</p>
+                        {scanResult.user.phone && <p>📞 {scanResult.user.phone}</p>}
                       </div>
                     )}
                   </div>
@@ -281,6 +313,19 @@ const QRScanner: React.FC<QRScannerProps> = ({ onLogout }) => {
                 <li>• The app automatically uses your back camera</li>
                 <li>• Each QR code can only be scanned once per attendee</li>
               </ul>
+              
+              {/* Debug info - show in development */}
+              {import.meta.env.DEV && (
+                <div className="mt-4 p-3 bg-gray-700/50 rounded-md border border-gray-600">
+                  <h4 className="text-white font-medium text-xs mb-2">🔧 Debug Info:</h4>
+                  <p className="text-gray-400 text-xs">
+                    Expected QR format: JSON with id, name, email, timestamp
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    Check browser console for raw QR data
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

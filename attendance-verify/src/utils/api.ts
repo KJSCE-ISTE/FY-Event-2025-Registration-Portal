@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { auth } from './auth';
-import type { AuthResponse, AttendanceResponse } from '../types';
+import type { AuthResponse, AttendanceResponse, ScanQRResponse } from '../types';
 
 const API_BASE = import.meta.env.VITE_SERVER_URL || 'http://localhost:3000';
 
@@ -42,6 +42,11 @@ export const authAPI = {
 export const attendanceAPI = {
   updateAttendance: async (userId: string): Promise<AttendanceResponse> => {
     const response = await api.post('/api/update-attendance', { userId });
+    return response.data;
+  },
+  
+  scanQR: async (qrData: string): Promise<ScanQRResponse> => {
+    const response = await api.post('/api/scan-qr', { qrData });
     return response.data;
   },
 };

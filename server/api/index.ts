@@ -797,26 +797,49 @@ app.post('/api/scan-qr', authenticateToken, async (req: AuthenticatedRequest, re
       return res.status(400).json({ error: 'Invalid QR code format' });
     }
 
+    // First check if user exists and if attendance is already marked
+    const checkResult = await pool.query(
+      'SELECT * FROM registrations WHERE id = $1',
+      [parsedData.id]
+    );
+
+    if (checkResult.rows.length === 0) {
+      return res.status(404).json({ error: 'Registration not found' });
+    }
+
+    const user = checkResult.rows[0];
+
+    if (user.attended) {
+      return res.status(400).json({ 
+        error: 'Attendance already marked for this user',
+        user: {
+          id: user.id,
+          name: `${user.first_name} ${user.last_name}`,
+          email: user.email,
+          year: user.year,
+          branch: user.branch,
+          attended: user.attended
+        }
+      });
+    }
+
+    // Mark attendance
     const result = await pool.query(
       'UPDATE registrations SET attended = TRUE WHERE id = $1 RETURNING *',
       [parsedData.id]
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Registration not found' });
-    }
-
-    const user = result.rows[0];
+    const updatedUser = result.rows[0];
 
     res.status(200).json({
       message: 'Attendance marked successfully',
       user: {
-        id: user.id,
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        year: user.year,
-        branch: user.branch,
-        attended: user.attended
+        id: updatedUser.id,
+        name: `${updatedUser.first_name} ${updatedUser.last_name}`,
+        email: updatedUser.email,
+        year: updatedUser.year,
+        branch: updatedUser.branch,
+        attended: updatedUser.attended
       }
     });
 
