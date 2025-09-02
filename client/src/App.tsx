@@ -103,7 +103,7 @@ function App() {
                     HACKXPOSED
                   </h3>
                   <p className="text-sm md:text-xl text-gray-300 max-w-xs md:max-w-md mx-auto">
-                    Learn about hackathons, connect with fellow developers, and discover the world of competitive coding.
+                    Learn about hackathons, connect with fellow developers, and discover the world of machine learning.
                     <br />
                     <span className="text-orange-400">Get ready to hack your way to success!</span>
                   </p>
@@ -141,7 +141,7 @@ function App() {
                     Our Keynote Speaker
                   </h2>
                   <p className="text-sm md:text-xl text-gray-300 max-w-xs md:max-w-md mx-auto">
-                    We're excited to introduce our amazing keynote speaker who will share insights on hackathons and competitive programming.
+                    We're excited to introduce our amazing keynote speaker who will share insights on hackathons and itive programming.
                     <br />
                     <span className="text-blue-400">Follow them for more tech content!</span>
                   </p>
