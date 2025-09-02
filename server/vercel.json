@@ -5,5 +5,14 @@
           "src": "dist/api/index.js",
           "use": "@vercel/node"
       }
+  ],
+  "scripts": {
+    "vercel-build": "tsc"
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/api/index.js"
+    }
   ]
 }
