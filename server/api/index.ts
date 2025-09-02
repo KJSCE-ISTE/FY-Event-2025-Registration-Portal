@@ -3,6 +3,9 @@ import { Pool } from 'pg';
 import nodemailer from 'nodemailer';
 import QRCode from 'qrcode';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 
