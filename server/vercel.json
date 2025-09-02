@@ -1,16 +1,9 @@
 {
-  "name": "my-vercel-ts-app",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "vercel dev",
-    "build": "tsc",
-    "start": "node dist/index.js"
-  },
-  "dependencies": {
-    "@vercel/node": "latest"
-  },
-  "devDependencies": {
-    "typescript": "^5.0.0",
-    "@types/node": "^20.0.0"
-  }
+  "version": 2,
+  "builds": [
+      {
+          "src": "dist/api/index.js",
+          "use": "@vercel/node"
+      }
+  ]
 }
