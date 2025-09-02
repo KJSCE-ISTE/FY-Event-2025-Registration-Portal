@@ -141,7 +141,7 @@ function App() {
                     Our Keynote Speaker
                   </h2>
                   <p className="text-sm md:text-xl text-gray-300 max-w-xs md:max-w-md mx-auto">
-                    We're excited to introduce our amazing keynote speaker who will share insights on hackathons and itive programming.
+                    We're excited to introduce our amazing keynote speaker who will share insights on hackathons and machine learning.
                     <br />
                     <span className="text-blue-400">Follow them for more tech content!</span>
                   </p>
